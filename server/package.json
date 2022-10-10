@@ -10,10 +10,14 @@
   "author": "Quee",
   "license": "ISC",
   "devDependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
-    "mongoose": "^6.6.3",
+    "mongoose": "^5.13.15",
     "socket.io": "^4.5.2"
+  },
+  "dependencies": {
+    "mongodb": "^4.10.0"
   }
 }
