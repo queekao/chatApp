@@ -5,6 +5,7 @@ const userRoutes = require("./routes/userRoutes.js");
 const messageRoute = require("./routes/messageRoute");
 const app = express();
 const socket = require("socket.io");
+const path = require("path");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -18,6 +19,13 @@ const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
   process.env.DATABASE_PASSWORD
 );
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+  app.get("*", (req, res) => {
+    req.sendFile(path).resolve(__dirname, "build", "index.html");
+  });
+}
 mongoose
   // .connect(process.env.DATABASE_LOCAL, {
   .connect(DB, {
