@@ -6,7 +6,7 @@ const messageRoute = require("./routes/messageRoute");
 const app = express();
 const socket = require("socket.io");
 const path = require("path");
-
+const PORT = process.env.PORT || 5001;
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -19,13 +19,9 @@ const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
   process.env.DATABASE_PASSWORD
 );
-console.log(process.env.NODE_ENV);
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("build"));
-  app.get("*", (req, res) => {
-    req.sendFile(path).resolve(__dirname, "build", "index.html");
-  });
-}
+//deployment
+app.use(express.static(path.join(__dirname + "/public")));
+//
 mongoose
   // .connect(process.env.DATABASE_LOCAL, {
   .connect(DB, {
@@ -54,10 +50,14 @@ mongoose
 const server = app.listen(process.env.PORT, () => {
   console.log(`server started on port ${process.env.PORT}`);
 });
+///client
+app.listen(PORT); //5001
+//
 const io = socket(server, {
   // if server have connection to the client
   cors: {
-    origin: "http://localhost:3000",
+    // origin: "http://localhost:3000",//for public developeing
+    origin: "http://localhost:5001",
     credentials: true,
   },
 });
