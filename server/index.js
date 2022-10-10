@@ -7,6 +7,7 @@ const app = express();
 const socket = require("socket.io");
 const path = require("path");
 const PORT = process.env.PORT || 5001;
+const CLIENT_PORT = 3000;
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -51,13 +52,13 @@ const server = app.listen(process.env.PORT, () => {
   console.log(`server started on port ${process.env.PORT}`);
 });
 ///client
-app.listen(PORT); //5001
+app.listen(CLIENT_PORT); //3000
 //
 const io = socket(server, {
   // if server have connection to the client
   cors: {
     // origin: "http://localhost:3000",//for public developeing
-    origin: "http://localhost:5001",
+    origin: "http://localhost:3000",
     credentials: true,
   },
 });
